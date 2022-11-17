@@ -2,6 +2,8 @@ package com.techo.mvvmdesignpatternex.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.techo.mvvmdesignpatternex.Util.Couroutines
+import com.techo.mvvmdesignpatternex.data.repo.UserRepo
 
 class AuthViewModel : ViewModel() {
     var email:String? = null
@@ -14,6 +16,17 @@ class AuthViewModel : ViewModel() {
             this.authListner?.onFailure("invaild username or password")
             return
         }
-        this.authListner?.onSuccess()
+//        val loginResponse = UserRepo().userLogin(email!!,password!!)
+//        this.authListner?.onSuccess(loginResponse)
+        Couroutines.main {
+            val loginResponse = UserRepo().userLogin(email!!,password!!)
+                if (loginResponse.isSuccessful){
+                    authListner?.onSuccess(loginResponse.body()!!.user!!)
+                }
+            else{
+                authListner?.onFailure("Error code ${loginResponse.code()}")
+                }
+        }
     }
+
 }

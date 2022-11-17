@@ -18,7 +18,7 @@ interface MyApi {
 //    @GET("UsersLogin")
 //    fun UserLogin(@Field("email") email:String,@Field("password") paswword:String):Call<ResponseBody>
 @POST("UsersLogin")
- suspend fun UserLogin(@Field("email") email:String,@Field("password")password:String):Response<AuthResponse>
+  fun UserLogin(@Field("email") email:String,@Field("password")password:String):Call<AuthResponse>
     companion object{
     operator  fun invoke():MyApi{
         return Retrofit.Builder()

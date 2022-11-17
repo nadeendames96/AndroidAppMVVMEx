@@ -5,6 +5,6 @@ import com.techo.mvvmdesignpatternex.data.db.entities.User
 
 interface AuthListner {
     fun onStarted()
-    fun onSuccess(user:User)
+    fun onSuccess(data: LiveData<String>)
     fun onFailure(msg:String)
 }

@@ -3,17 +3,15 @@ package com.techo.mvvmdesignpatternex.ui.auth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.google.gson.Gson
 import com.techo.mvvmdesignpatternex.R
 import com.techo.mvvmdesignpatternex.Util.hide
 import com.techo.mvvmdesignpatternex.Util.show
+import com.techo.mvvmdesignpatternex.Util.snackbar
 import com.techo.mvvmdesignpatternex.Util.toast
-import com.techo.mvvmdesignpatternex.data.db.entities.User
 import com.techo.mvvmdesignpatternex.databinding.ActivityLoginBinding
 
 class loginActivity : AppCompatActivity(),AuthListner {
@@ -27,16 +25,18 @@ class loginActivity : AppCompatActivity(),AuthListner {
     }
     override fun onStarted() {
    toast("Login Started")
-        Log.wtf("ApppStart","App OnStarted")
         binding.PB.show()
     }
-    override fun onSuccess(user: User) {
+    override fun onSuccess(data: LiveData<String>) {
         binding.PB.hide()
-        toast("Login Success")
-        toast("${user!!.name!!} is Logged in")
+       data.observe(this, Observer {
+//           toast("is Logged in")
+           binding.rootView.snackbar("User Logged In")
+       })
     }
     override fun onFailure(msg: String) {
-        toast(msg)
+//        toast(msg)
+        binding.rootView.snackbar(msg)
         binding.PB.hide()
     }
 }

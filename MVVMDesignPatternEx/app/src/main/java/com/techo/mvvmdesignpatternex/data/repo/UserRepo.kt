@@ -1,5 +1,7 @@
 package com.techo.mvvmdesignpatternex.data.repo
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.techo.mvvmdesignpatternex.data.db.entities.User
@@ -11,7 +13,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserRepo {
+class UserRepo(private val context: Context) {
      fun userLogin(email:String,password:String):LiveData<String>{
 //        return apiRequest {
 //            MyApi().UserLogin(email,password)
@@ -37,5 +39,9 @@ class UserRepo {
 
                 })
         return  loginResponse
+    }
+    fun getUser():Boolean{
+        Toast.makeText(context,"Get User Done", Toast.LENGTH_SHORT).show()
+    return true
     }
 }
